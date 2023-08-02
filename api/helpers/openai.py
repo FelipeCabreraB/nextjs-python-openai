@@ -82,7 +82,6 @@ def query(query):
 # Chat with OpenAI
 ################################################################################
 def chat_query(question):
-    
     memory = ConversationBufferMemory(
     memory_key="chat_history",
     return_messages=True
