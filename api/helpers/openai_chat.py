@@ -37,6 +37,7 @@ qa = ConversationalRetrievalChain.from_llm(
   memory=memory
 )
 
+
 def chat_query(question):
   result = qa({"question": question})
   return result
