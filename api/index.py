@@ -6,7 +6,7 @@ from api.helpers.openai_chat import chat_query
 
 app = FastAPI()
 
-@app.get("/revalidate")
+@app.get("/api/revalidate")
 def handle_revalidate():
     start_time = time.time()
 
@@ -20,7 +20,7 @@ def handle_revalidate():
         "duration": f"{elapsed_time:.4f} seconds"
     }
 
-@app.post("/query")
+@app.post("/api/query")
 async def handle_query(request: Request):
     start_time = time.time()
 
@@ -38,7 +38,7 @@ async def handle_query(request: Request):
         "duration": f"{elapsed_time:.4f} seconds"
     }
 
-@app.post("/chat-query")
+@app.post("/api/chat-query")
 async def handle_query(request: Request):
     start_time = time.time()
 
