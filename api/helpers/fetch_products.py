@@ -33,7 +33,7 @@ def fetch_products():
                 "description": item.get("description", None),
                 "price": item.get("price", None),
                 "currency": item.get("currency", None),
-                "stock": item.get("stock_level", None),
+                "slug": item.get("slug", None),
             }
             extracted_data_list.append(extracted_data)    
         

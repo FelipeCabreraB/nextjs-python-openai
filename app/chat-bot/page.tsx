@@ -1,0 +1,31 @@
+//@ts-nocheck
+
+import ClientContent from "./ClientContent";
+
+async function getData() {
+  try {
+    const res = await fetch("https://api.swell.store/products?limit=1000", {
+      method: "get",
+      headers: {
+        Authorization:
+          "Basic c3F1YXJlLW9uZTpIclBiamV5TTltWXZzbVYxRUxHWVZKekpON0lGeHJoUQ==",
+        "Content-Type": "application/json",
+      },
+    });
+    const products = await res.json();
+    return products;
+  } catch (error) {
+    return [];
+  }
+}
+
+const ChatBot = async () => {
+  const { results } = await getData();
+  return (
+    <>
+      <ClientContent products={results} />
+    </>
+  );
+};
+
+export default ChatBot;

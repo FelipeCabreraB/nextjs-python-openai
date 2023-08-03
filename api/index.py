@@ -1,57 +1,39 @@
 import time
+import json
 
 from fastapi import FastAPI, Request
-from api.helpers.openai import revalidate, query
-from api.helpers.openai_chat import chat_query
+from api.helpers.openai import revalidate, related, search, chat_query
 
 app = FastAPI()
 
+# Revalidate the Chroma instance
 @app.get("/api/revalidate")
 def handle_revalidate():
-    start_time = time.time()
-
     revalidate()
-
-    end_time = time.time()
-    elapsed_time = end_time - start_time
 
     return {
         "status": "Revalidated",
-        "duration": f"{elapsed_time:.4f} seconds"
     }
 
-@app.post("/api/query")
-async def handle_query(request: Request):
-    start_time = time.time()
-
-    data = await request.json()
-    search = data["query"]
-
-    result = query(search)
-
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-
-    return {
-        "status": "ok",
-        "result": result,
-        "duration": f"{elapsed_time:.4f} seconds"
-    }
-
+# Chat bot
 @app.post("/api/chat-query")
 async def handle_query(request: Request):
-    start_time = time.time()
-
     data = await request.json()
     search = data["query"]
-
     result = chat_query(search)
 
-    end_time = time.time()
-    elapsed_time = end_time - start_time
+    return result
+    
+    
+# Get related products from a product
+@app.post('/api/related')
+async def post_related(question: Request):
+	data = await question.json()
+	res = related(json.dumps(data))
+	return res
 
-    return {
-        "status": "ok",
-        "result": result,
-        "duration": f"{elapsed_time:.4f} seconds"
-    }
+# Search
+@app.post('/api/search')
+async def post_search(search_term: Request):
+  res = search(search_term.value)
+  return res

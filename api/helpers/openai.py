@@ -52,31 +52,66 @@ def revalidate():
     instance.persist()
 
 ################################################################################
-# Make OpenAI query
+# Related products
 ################################################################################
-def query(query):
-    instance = get_chroma_instance()
-    prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+def related(query):
+  instance = get_chroma_instance()
 
-    {context}
+  prompt_template = """You will receive a product object delimited with <>. Your task is to use the following pieces of context to find a maximum of three products that are related to the product delimited with <>.
+  If you can not find any related products, just return an empty array.
+  Don't return duplicated products.
+  Don't return the product provided in the final result.
+  Return an array of products containing these keys: name, description, slug, price, currency.
+  Don't return an object.
 
-    Question: {question}
-    Answer with a list of products in JSON format:"""
+  {context}
 
-    PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+  Product: <{question}>
+  Answer in JSON format:"""
 
-    chain_type_kwargs = {"prompt": PROMPT}
+  PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
-    qa = RetrievalQA.from_chain_type(
-        llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')),
-        chain_type="stuff",
-        retriever=instance.as_retriever(),
-        chain_type_kwargs=chain_type_kwargs
-    )
+  chain_type_kwargs = {"prompt": PROMPT}
 
-    res = qa.run(query)
+  qa = RetrievalQA.from_chain_type(
+    llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')),
+    chain_type="stuff",
+    retriever=instance.as_retriever(),
+    chain_type_kwargs=chain_type_kwargs
+  )
 
-    return json.loads(res)
+  res = qa.run(query)
+  return json.loads(res)
+
+################################################################################
+# Search products
+################################################################################
+def search(search_term):
+  instance = get_chroma_instance()
+
+  prompt_template = """You are an optimized search engine.
+  You will receive a search term delimited with <>.
+  Your task is to use the following pieces of context to find a maximum of three products that match with the search term provided.
+
+  {context}
+
+  Search term: <{question}>
+  Return an array of products.
+  Answer in JSON format:"""
+
+  PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+
+  chain_type_kwargs = {"prompt": PROMPT}
+
+  qa = RetrievalQA.from_chain_type(
+    llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')),
+    chain_type="stuff",
+    retriever=instance.as_retriever(),
+    chain_type_kwargs=chain_type_kwargs
+  )
+
+  res = qa.run(search_term)
+  return json.loads(res)
 
 ################################################################################
 # Chat with OpenAI
@@ -101,7 +136,8 @@ def chat_query(question):
         llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')),
         retriever=instance.as_retriever(),
         combine_docs_chain_kwargs={"prompt": PROMPT},
-        memory=memory
+        memory=memory,
+        verbose=True
     )
 
     result = qa({"question": question})
