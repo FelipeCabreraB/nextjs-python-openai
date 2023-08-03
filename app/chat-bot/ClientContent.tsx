@@ -3,7 +3,7 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Spinner } from "../components/Spinner";
 import Typewriter from "typewriter-effect";
 import Container from "../layout/Container";
@@ -37,7 +37,7 @@ export default function ClientContent({ products }) {
         query: data.question,
       })
       .then(function (response) {
-        setCurrentAnswer(response.data.result.answer);
+        setCurrentAnswer(response.data.answer);
         setIsLoading(false);
       })
       .catch(function (error) {

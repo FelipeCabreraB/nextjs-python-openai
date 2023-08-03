@@ -7,8 +7,7 @@ async function getData() {
     const res = await fetch("https://api.swell.store/products?limit=1000", {
       method: "get",
       headers: {
-        Authorization:
-          "Basic c3F1YXJlLW9uZTpIclBiamV5TTltWXZzbVYxRUxHWVZKekpON0lGeHJoUQ==",
+        Authorization: process.env.SWELL_AUTHORIZATION_KEY,
         "Content-Type": "application/json",
       },
     });
