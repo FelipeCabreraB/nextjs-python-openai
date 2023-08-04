@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ['cdn.schema.io', 'cdn-staging.swell.store', 'cdn.swell.store']
+  },
   rewrites: async () => {
     return [
       {

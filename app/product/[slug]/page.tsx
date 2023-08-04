@@ -1,5 +1,6 @@
 //@ts-nocheck
 
+import ProductCard from "@/app/components/ProductCard";
 import Container from "@/app/layout/Container";
 import axios from "axios";
 import Link from "next/link";
@@ -35,6 +36,7 @@ const Product = async ({ params }) => {
   const { slug } = params;
   const { results } = await getData(slug);
   const product = results[0];
+  console.log("🚀 ~ file: page.tsx:38 ~ Product ~ product:", product)
 
   const related_products = await getRelatedProducts({
     name: product.name,
@@ -44,30 +46,12 @@ const Product = async ({ params }) => {
   return (
     <>
       <Container>
-        <div className="p-5 border bg-white max-w-4xl mx-auto rounded-md my-10">
-          <h2 className="text-2xl">
-            <strong>Name:</strong> {product.name}
-          </h2>
-          <p className="text-lg">
-            <strong>Price:</strong> {product.currency} {product.price}
-          </p>
-        </div>
+        <ProductCard product={product} />
 
-        <h2 className="text-2xl mb-4">Related products:</h2>
+        <h2 className="text-2xl mb-8 text-primary">Related products:</h2>
         <ul className="grid md:grid-cols-3 gap-5">
-          {related_products?.map((product, i) => (
-            <Link href={`/product/${product.slug}`} key={i}>
-              <li className="h-full">
-                <div className="p-5 border bg-white h-full max-w-4xl mx-auto rounded-md">
-                  <h2 className="text-2xl">
-                    <strong>Name:</strong> {product.name}
-                  </h2>
-                  <p className="text-lg">
-                    <strong>Price:</strong> {product.currency} {product.price}
-                  </p>
-                </div>
-              </li>
-            </Link>
+          {related_products?.map((element) => (
+            <ProductCard key={element.id} product={element} />
           ))}
         </ul>
       </Container>

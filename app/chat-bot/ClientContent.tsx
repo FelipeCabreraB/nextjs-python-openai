@@ -8,6 +8,7 @@ import { Spinner } from "../components/Spinner";
 import Typewriter from "typewriter-effect";
 import Container from "../layout/Container";
 import Link from "next/link";
+import ProductCard from "../components/ProductCard";
 
 type Inputs = {
   question: string;
@@ -19,7 +20,8 @@ type ChatEntry = {
 };
 
 export default function ClientContent({ products }) {
-  const [currentAnswer, setCurrentAnswer] = useState<string>("");
+  const [chatHistory, setChatHistory] = useState<{ content: string }[]>([]);
+  console.log("🚀 ~ file: ClientContent.tsx:24 ~ ClientContent ~ chatHistory:", chatHistory)
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -31,18 +33,29 @@ export default function ClientContent({ products }) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
-    setCurrentAnswer("");
     try {
       const response = await axios.post("/api/chat-query", {
-        query: data.question,
+        query: data.question
       });
-      setCurrentAnswer(response.data.answer);
+      setChatHistory(response.data.chat_history);
     } catch (error) {
       console.log(error);
     }
     setIsLoading(false);
     setValue("question", "");
   };
+
+  const clearMemory = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post("/api/chat-query", {
+        clear_memory: true,
+      });
+      setChatHistory(response.data);
+    } catch (error) {
+    }
+    setIsLoading(false);
+  }
 
   return (
     <main className="my-20">
@@ -73,51 +86,59 @@ export default function ClientContent({ products }) {
             )}
             <button
               type="submit"
-              className="bg-emerald-600 px-3 py-2 mt-8 rounded-md text-white hover:bg-emerald-500 mr-5"
+              className="text-secondary inline-block text-xl px-5 py-3 rounded-lg bg-primary hover:bg-opacity-80 transition shadow-md mt-5"
             >
               Send
             </button>
           </form>
-          {currentAnswer && (
-            <div>
-              <p className="mt-8 mb-2">
-                <strong>Response:</strong>
-              </p>
-              <div>
-                {
+          <button
+            className="ml-2 text-primary inline-block text-xl px-5 py-3 rounded-lg bg-secondary hover:bg-opacity-80 transition shadow-md mt-5"
+            onClick={clearMemory}
+          >
+            Start a new conversation
+          </button>
+          <div className="mt-10">
+            {chatHistory.map((entry, i) => (
+              <p key={i} className="even:ml-10 even:mb-5 odd:font-bold">
+                {i === chatHistory.length - 1 ? (
                   <Typewriter
                     onInit={(typewriter) => {
-                      typewriter.typeString(currentAnswer).start();
+                      typewriter.typeString(entry.content).start();
                     }}
                     options={{
                       delay: 5,
                     }}
                   />
-                }
-              </div>
+                ) : (
+                  entry.content
+                )}
+              </p>
+            ))}
+          </div>
+          {/* {currentAnswer && (
+            <div className="ml-10">
+              {
+                <Typewriter
+                  onInit={(typewriter) => {
+                    typewriter.typeString(currentAnswer).start();
+                  }}
+                  options={{
+                    delay: 5,
+                  }}
+                />
+              }
             </div>
-          )}
+          )} */}
           {isLoading && (
             <div className="mt-8 flex justify-center">
               <Spinner />
             </div>
           )}
         </div>
-        <h4 className="text-2xl mb-8">Our products:</h4>
+        <h4 className="text-2xl mb-8 text-primary">Our products:</h4>
         <ul className="grid md:grid-cols-3 gap-5">
           {products.map((product, i) => (
-            <Link href={`/product/${product.slug}`} key={i}>
-              <li className="h-full">
-                <div className="p-5 border bg-white h-full max-w-4xl mx-auto rounded-md">
-                  <h2 className="text-2xl">
-                    <strong>Name:</strong> {product.name}
-                  </h2>
-                  <p className="text-lg">
-                    <strong>Price:</strong> {product.currency} {product.price}
-                  </p>
-                </div>
-              </li>
-            </Link>
+            <ProductCard key={product.id} product={product} />
           ))}
         </ul>
       </Container>

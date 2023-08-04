@@ -13,7 +13,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import JSONLoader
 from langchain.prompts import PromptTemplate
-from api.helpers.fetch_products import fetch_products
+from helpers.fetch_products import fetch_products
 
 load_dotenv()
 
@@ -61,7 +61,7 @@ def related(query):
   If you can not find any related products, just return an empty array.
   Don't return duplicated products.
   Don't return the product provided in the final result.
-  Return an array of products containing these keys: name, description, slug, price, currency.
+  Return an array of products containing these keys: name, description, slug, price, currency, image.
   Don't return an object.
 
   {context}
@@ -92,6 +92,9 @@ def search(search_term):
   prompt_template = """You are an optimized search engine.
   You will receive a search term delimited with <>.
   Your task is to use the following pieces of context to find a maximum of three products that match with the search term provided.
+  Don't return duplicated products.
+  Return an array of products containing these keys: name, description, slug, price, currency, image.
+  Don't return an object.
 
   {context}
 
@@ -116,12 +119,16 @@ def search(search_term):
 ################################################################################
 # Chat with OpenAI
 ################################################################################
-def chat_query(question):
-    memory = ConversationBufferMemory(
-    memory_key="chat_history",
-    return_messages=True
-    )
+# we defined memory outside of function so it does not reset on every request
+memory = ConversationBufferMemory(
+  memory_key="chat_history",
+  return_messages=True
+)
 
+def clear_memory():
+  memory.clear()
+
+def chat_query(question):
     instance = get_chroma_instance()
     
     prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
