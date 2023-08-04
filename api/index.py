@@ -35,5 +35,6 @@ async def post_related(question: Request):
 # Search
 @app.post('/api/search')
 async def post_search(search_term: Request):
-  res = search(search_term.value)
-  return res
+    data = await search_term.json()
+    res = related(json.dumps(data))
+    return res

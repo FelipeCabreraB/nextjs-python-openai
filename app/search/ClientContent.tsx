@@ -19,7 +19,7 @@ type ChatEntry = {
 };
 
 export default function ClientContent({ products }) {
-  const [currentAnswer, setCurrentAnswer] = useState<string>("");
+  const [searchedProducts, setSearchedProducts] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -31,17 +31,19 @@ export default function ClientContent({ products }) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
-    setCurrentAnswer("");
+    setSearchedProducts("");
     try {
-      const response = await axios.post("/api/chat-query", {
-        query: data.question,
+      const response = await axios.post("/api/search", {
+        search_term: data.search_term,
       });
-      setCurrentAnswer(response.data.answer);
+      setSearchedProducts(response.data);
+      console.log(response.data);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
-    setIsLoading(false);
-    setValue("question", "");
+    setValue("search_term", "");
   };
 
   return (
@@ -57,15 +59,15 @@ export default function ClientContent({ products }) {
             }}
           >
             <label htmlFor="question" className="block mb-8 text-2xl">
-              Question for the assistant:
+              Search:
             </label>
             <input
               type="text"
-              id="question"
-              placeholder="Write any question about any product..."
+              id="search_term"
+              placeholder="Search..."
               className="border block w-full p-2 rounded-md"
-              {...register("question", {
-                required: "Question is required",
+              {...register("search_term", {
+                required: "Search term is required",
               })}
             />
             {errors.question && (
@@ -78,22 +80,29 @@ export default function ClientContent({ products }) {
               Send
             </button>
           </form>
-          {currentAnswer && (
+          {searchedProducts && (
             <div>
               <p className="mt-8 mb-2">
                 <strong>Response:</strong>
               </p>
               <div>
-                {
-                  <Typewriter
-                    onInit={(typewriter) => {
-                      typewriter.typeString(currentAnswer).start();
-                    }}
-                    options={{
-                      delay: 5,
-                    }}
-                  />
-                }
+                <ul className="grid md:grid-cols-3 gap-5">
+                  {searchedProducts?.map((product, i) => (
+                    <Link href={`/product/${product.slug}`} key={i}>
+                      <li className="h-full">
+                        <div className="p-5 border bg-white h-full max-w-4xl mx-auto rounded-md">
+                          <h2 className="text-2xl">
+                            <strong>Name:</strong> {product.name}
+                          </h2>
+                          <p className="text-lg">
+                            <strong>Price:</strong> {product.currency}{" "}
+                            {product.price}
+                          </p>
+                        </div>
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
               </div>
             </div>
           )}
