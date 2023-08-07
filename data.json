@@ -5,7 +5,8 @@
         "description": "This is a green t-shirt",
         "price": 10,
         "currency": "USD",
-        "slug": "green-t-shirt"
+        "slug": "green-t-shirt",
+        "image": "https://cdn.swell.store/square-one/64ad9abcc165f00012bac026/70d3520454aa87b5091d9d18fd04c533"
     },
     {
         "id": "6452a2f4854f99001217661f",
@@ -13,7 +14,8 @@
         "description": "Our Pink Pants for women are a stylish and vibrant choice. With a flattering fit and comfortable fabric, they add a fun and feminine touch to any outfit. Perfect for expressing your unique sense of fashion and adding a pop of color to your look.",
         "price": 130,
         "currency": "USD",
-        "slug": "pink-pants"
+        "slug": "pink-pants",
+        "image": "https://cdn.schema.io/square-one/6452a2d70c87a200120b9d81/2e1220ebde80260826ab131a0799616e"
     },
     {
         "id": "6452a1f3ccc5bc0011b5cca2",
@@ -21,7 +23,8 @@
         "description": "Stay cozy and fashionable with our Colorful Oversize Women&#39;s Sweater. With vibrant colors and a comfortable fit, it&#39;s the perfect choice for adding a playful touch to your outfit. Stay warm and stylish all day long with this trendy sweater.",
         "price": 100,
         "currency": "USD",
-        "slug": "colorful-oversize-women-sweater"
+        "slug": "colorful-oversize-women-sweater",
+        "image": "https://cdn.schema.io/square-one/6452a1c40c87a200120b9d7f/04fdf4f4bb67ca6ec046ab2856a9f8f6"
     },
     {
         "id": "6452a14193685e001285b049",
@@ -29,7 +32,8 @@
         "description": "Stay cozy and stylish with our Colorful Beige Women&#39;s Sweater. Made with soft fabric, it keeps you warm and comfortable. The beige color is beautifully complemented by colorful accents, adding a playful touch to your outfit. Versatile and chic, this sweater is a perfect choice for any occasion.",
         "price": 50,
         "currency": "USD",
-        "slug": "colorful-beige-women-sweater"
+        "slug": "colorful-beige-women-sweater",
+        "image": "https://cdn.schema.io/square-one/6452a03b5058b300115437da/87090e793fbdeba385a8efcd161ad34d"
     },
     {
         "id": "64529ff6c204cf0011d8901d",
@@ -37,7 +41,8 @@
         "description": "Our White and Green Striped Shirt is a stylish and comfortable choice. With its classic striped design, this shirt adds a touch of freshness to your look. Versatile for any occasion, it effortlessly enhances your style with its simple yet fashionable appeal.",
         "price": 65,
         "currency": "USD",
-        "slug": "simple-shirt-with-green-stripes"
+        "slug": "simple-shirt-with-green-stripes",
+        "image": "https://cdn.schema.io/square-one/64529fd8854f990012176607/4d48ca2aa2fb960ea4aeba9166ea9c19"
     },
     {
         "id": "64529f83854f990012176603",
@@ -45,7 +50,8 @@
         "description": "Our White T-Shirt with Floral Print is a stylish and comfortable option for casual wear. The white color creates a clean look, while the floral print adds a touch of style. Made with soft fabric, it ensures all-day comfort. Pair it with jeans or shorts for an effortless and fashionable outfit.",
         "price": 50,
         "currency": "USD",
-        "slug": "white-t-shirt-with-floral-print"
+        "slug": "white-t-shirt-with-floral-print",
+        "image": "https://cdn.schema.io/square-one/64529f6cc204cf0011d8901a/27c104bd3221a44f107b435e6747cbf9"
     },
     {
         "id": "64529d1793685e001285b02f",
@@ -53,7 +59,8 @@
         "description": "Our Floral Handkerchief is a charming accessory that adds a touch of elegance to any outfit. With its delicate floral pattern and soft fabric, it combines style and functionality effortlessly. Whether used as a fashion statement or for practical purposes, this versatile handkerchief is a must-have addition to your accessories collection.",
         "price": 15,
         "currency": "USD",
-        "slug": "floral-handkerchief"
+        "slug": "floral-handkerchief",
+        "image": "https://cdn.schema.io/square-one/64529c650c87a200120b9d30/1344871b76e65597d48a6527e186c9c6"
     },
     {
         "id": "63452d2c8b0b5d0013083233",
@@ -61,7 +68,8 @@
         "description": "Our Red Top is a stylish and bold choice. With its vibrant color and comfortable fit, it&#39;s perfect for any occasion. Whether you dress it up or down, this top is a fabulous way to showcase your fashionable side.",
         "price": 1432,
         "currency": "USD",
-        "slug": "striped-dress"
+        "slug": "striped-dress",
+        "image": "https://cdn.schema.io/square-one/63452e5ece82950012349268/16cf4a69cc3413364c8f5944e7f150eb"
     },
     {
         "id": "633ef76d88453b0012120e0d",
@@ -69,7 +77,8 @@
         "description": "Street wear navy jacket. Perfect FittingOur Navy Street Wear Jacket is a stylish addition to your casual wardrobe. With its urban vibe and comfortable fit, this jacket effortlessly enhances your streetwear look. Perfect for everyday wear, it adds a touch of cool and confident style to any outfit.",
         "price": 40,
         "currency": "USD",
-        "slug": "street-wear-navy-jacket"
+        "slug": "street-wear-navy-jacket",
+        "image": "https://cdn.schema.io/square-one/633ef73dd164fe0012a7f80a/540e30decbfdebb3083ac96d9b716c23"
     },
     {
         "id": "633ef711d164fe0012a7f7f5",
@@ -77,7 +86,8 @@
         "description": "Stay comfortable in any weather with our Lightweight Windbreaker Jacket. Designed for practicality, it protects you from the wind without feeling heavy. Made with lightweight materials, it&#39;s perfect for everyday wear. Whether you&#39;re outdoors or on the go, this versatile jacket keeps you stylish and comfortable.",
         "price": 30,
         "currency": "USD",
-        "slug": "lightweight-windbreaker-jacket"
+        "slug": "lightweight-windbreaker-jacket",
+        "image": "https://cdn.schema.io/square-one/633ef6ccd164fe0012a7f7d4/fa94fcef966734e26ac2a1701b2b71b9"
     },
     {
         "id": "633ef691b34148001210c84e",
@@ -85,7 +95,8 @@
         "description": "Our Fashionable Men&#39;s Shirt is a versatile must-have. With its trendy design and high-quality materials, it effortlessly elevates your style. Perfect for any occasion, it showcases your impeccable fashion sense with comfort and durability.",
         "price": 15,
         "currency": "USD",
-        "slug": "fashionable-shirt-for-men"
+        "slug": "fashionable-shirt-for-men",
+        "image": "https://cdn.schema.io/square-one/633ef665d164fe0012a7f7b9/b21d80b1973f52a593aaf133e5d620bd"
     },
     {
         "id": "633ef628d164fe0012a7f791",
@@ -93,7 +104,8 @@
         "description": "Stay cozy and fashionable this fall with our Red and Black Fall Flannel. With its classic plaid pattern and warm colors, it&#39;s perfect for cooler days. Made with soft fabric, it offers comfort and style. A must-have for your fall wardrobe.",
         "price": 20,
         "currency": "USD",
-        "slug": "red-and-black-fall-shirt"
+        "slug": "red-and-black-fall-shirt",
+        "image": "https://cdn.schema.io/square-one/633ef5f689e34300129bf216/10ffa86f850a823a0c82edc118fc5ce6"
     },
     {
         "id": "633ef586d164fe0012a7f687",
@@ -101,7 +113,8 @@
         "description": "Our Colored Edges T-Shirt is a stylish and comfortable choice. With its colored edges, it adds a pop of vibrancy to your outfit. Made from soft fabric, it&#39;s easy to wear and versatile for any occasion. Perfect for adding a touch of simplicity and color to your look.",
         "price": 6,
         "currency": "USD",
-        "slug": "simple-t-shirt-with-colored-edges"
+        "slug": "simple-t-shirt-with-colored-edges",
+        "image": "https://cdn.schema.io/square-one/633ef54509f6fd0014cdb61d/9723fe309fe17d7a77a3e60303348b2c"
     },
     {
         "id": "633ef4f189e34300129bf1e1",
@@ -109,7 +122,8 @@
         "description": "Our Black Tank Top is a must-have staple for women. Its classic black color goes well with any outfit, and its comfortable fabric offers a flattering fit. Perfect for layering or wearing on its own, this tank top is a versatile and timeless choice for everyday style.",
         "price": 7,
         "currency": "USD",
-        "slug": "black-tank-top"
+        "slug": "black-tank-top",
+        "image": "https://cdn.schema.io/square-one/633ef4cf88453b0012120dfe/f3f092a7613a552c14bd52b87ac06bd7"
     },
     {
         "id": "633ef484d164fe0012a7f5db",
@@ -117,7 +131,8 @@
         "description": "Our Sleeve Detail White T-Shirt is a stylish and versatile addition to your wardrobe. With its unique sleeve design, this white tee adds a touch of flair to your outfit. Made from comfortable fabric, it&#39;s perfect for everyday wear. Whether you&#39;re dressing up or keeping it casual, this t-shirt effortlessly elevates your style.",
         "price": 10,
         "currency": "USD",
-        "slug": "sleeve-detail-white-t-shirt"
+        "slug": "sleeve-detail-white-t-shirt",
+        "image": "https://cdn.schema.io/square-one/633ef465d164fe0012a7f5ca/a7c7285c4d75c6e44a259d78631de747"
     },
     {
         "id": "633ef408b34148001210c80b",
@@ -125,7 +140,8 @@
         "description": "Make a statement with our Red Off Shoulder Cocktail Dress. This stunning dress features a flattering off-shoulder design and a vibrant red color. Perfect for cocktail parties and special events, it ensures a comfortable and confident fit that will turn heads wherever you go.",
         "price": 30,
         "currency": "USD",
-        "slug": "red-cocktail-dress-off-shoulder"
+        "slug": "red-cocktail-dress-off-shoulder",
+        "image": "https://cdn.schema.io/square-one/633ef3b7d164fe0012a7f5b9/6510150f0064ebdba300f71405a9b433"
     },
     {
         "id": "633ef373b34148001210c7f4",
@@ -133,7 +149,8 @@
         "description": "Turn heads in our Black Night Cocktail Dress. This sleek and elegant dress is perfect for evening events. With its stunning black color and stylish silhouette, it&#39;s designed to make a statement. Made with high-quality fabric, it offers both comfort and style. Whether it&#39;s a cocktail party or a special night out, this dress ensures a captivating and memorable look.",
         "price": 35,
         "currency": "USD",
-        "slug": "black-night-cocktail-dress"
+        "slug": "black-night-cocktail-dress",
+        "image": "https://cdn.schema.io/square-one/633ef30ab34148001210c7ef/6df52e0d7fa5fd8624455990979cce5f"
     },
     {
         "id": "633ef12f89e34300129bf17d",
@@ -141,7 +158,8 @@
         "description": "Our Ruffled White Summer Dress is a charming choice for the sunny season. With playful ruffles and a crisp white color, it adds a feminine touch to your look. Made from lightweight and breathable fabric, it keeps you comfortable on warm days. Whether you&#39;re at the beach or a garden party, this dress effortlessly showcases your effortless summer style.",
         "price": 15,
         "currency": "USD",
-        "slug": "ruffled-white-summer-dress"
+        "slug": "ruffled-white-summer-dress",
+        "image": "https://cdn.schema.io/square-one/633ef0c689e34300129bf179/e12b510c4e84da30f4099805cbb1af66"
     },
     {
         "id": "633ef04488453b0012120d7f",
@@ -149,7 +167,8 @@
         "description": "Embrace the summer vibes with our Floral Summer Dress. Featuring a charming floral print and lightweight fabric, it&#39;s perfect for sunny days. With its flattering silhouette, this dress keeps you comfortable and stylish for any occasion, whether it&#39;s a beach stroll or a garden party.",
         "price": 15,
         "currency": "USD",
-        "slug": "floral-summer-dress"
+        "slug": "floral-summer-dress",
+        "image": "https://cdn.schema.io/square-one/633eefdbd164fe0012a7f52f/1e20b7459baebd9d7831e2105efe64db"
     },
     {
         "id": "633eef08b34148001210c719",
@@ -157,7 +176,8 @@
         "description": "Elevate your style with our Off Shoulder Green Dress. This elegant dress features a flattering off-shoulder neckline and vibrant green color, making it a versatile choice for any occasion. Comfortable and fashionable, it&#39;s perfect for showcasing your unique sense of style.",
         "price": 25,
         "currency": "USD",
-        "slug": "off-shoulder-green-dress"
+        "slug": "off-shoulder-green-dress",
+        "image": "https://cdn.schema.io/square-one/633eee8f09f6fd0014cdb5c0/318401735cc5acf08dc04070548d1b6b"
     },
     {
         "id": "632c7a0b4a19e5001236c64c",
@@ -165,7 +185,8 @@
         "description": "Our Women&#39;s Black T-Shirt is a versatile wardrobe staple. Designed for both style and comfort, this classic black tee offers a flattering fit and a soft, breathable feel. Whether you dress it up or down, it effortlessly adds a touch of chic simplicity to any outfit.",
         "price": 8,
         "currency": "USD",
-        "slug": "black-t-shirt"
+        "slug": "black-t-shirt",
+        "image": "https://cdn.schema.io/square-one/632c796f65e9d3001315c1ef/d8e7caef8618826b82ff9949f7558b68"
     },
     {
         "id": "632c78e29f25080011864d0e",
@@ -173,6 +194,7 @@
         "description": "Our Men&#39;s Blue Blazer is a stylish and reliable choice for any occasion. Made with quality materials, this classic blazer adds a touch of sophistication to your outfit effortlessly.",
         "price": 15,
         "currency": "USD",
-        "slug": "light-blue-blazer"
+        "slug": "light-blue-blazer",
+        "image": "https://cdn.schema.io/square-one/632c787f5d9d790012469829/0cb8364d78b58bf02a3340c191c88491"
     }
 ]

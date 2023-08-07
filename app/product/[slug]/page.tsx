@@ -36,7 +36,6 @@ const Product = async ({ params }) => {
   const { slug } = params;
   const { results } = await getData(slug);
   const product = results[0];
-  console.log("🚀 ~ file: page.tsx:38 ~ Product ~ product:", product)
 
   const related_products = await getRelatedProducts({
     name: product.name,
@@ -45,10 +44,10 @@ const Product = async ({ params }) => {
 
   return (
     <>
-      <Container>
+      <Container className="mb-20">
         <ProductCard product={product} />
 
-        <h2 className="text-2xl mb-8 text-primary">Related products:</h2>
+        <h2 className="text-2xl mb-8 text-primary mt-10">Related products:</h2>
         <ul className="grid md:grid-cols-3 gap-5">
           {related_products?.map((element) => (
             <ProductCard key={element.id} product={element} />
