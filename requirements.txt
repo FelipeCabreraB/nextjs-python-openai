@@ -7,8 +7,6 @@ attrs==23.1.0
 backoff==2.2.1
 certifi==2023.7.22
 charset-normalizer==3.2.0
-chroma-hnswlib==0.7.2
-chromadb==0.4.4
 click==8.1.6
 coloredlogs==15.0.1
 dataclasses-json==0.5.14
