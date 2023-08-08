@@ -2,7 +2,7 @@ import time
 import json
 
 from fastapi import FastAPI, Request
-from helpers.openai import revalidate, related, search, chat_query, clear_memory
+from api.helpers.openai import revalidate, related, search, chat_query, clear_memory
 
 app = FastAPI()
 
