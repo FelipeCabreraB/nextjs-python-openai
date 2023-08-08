@@ -21,7 +21,6 @@ type ChatEntry = {
 
 export default function ClientContent({ products }) {
   const [chatHistory, setChatHistory] = useState<{ content: string }[]>([]);
-  console.log("🚀 ~ file: ClientContent.tsx:24 ~ ClientContent ~ chatHistory:", chatHistory)
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -35,7 +34,7 @@ export default function ClientContent({ products }) {
     setIsLoading(true);
     try {
       const response = await axios.post("/api/chat-query", {
-        query: data.question
+        query: data.question,
       });
       setChatHistory(response.data.chat_history);
     } catch (error) {
@@ -52,10 +51,9 @@ export default function ClientContent({ products }) {
         clear_memory: true,
       });
       setChatHistory(response.data);
-    } catch (error) {
-    }
+    } catch (error) {}
     setIsLoading(false);
-  }
+  };
 
   return (
     <main className="my-20">

@@ -78,7 +78,7 @@ def related(query):
   If you can not find any related products, just return an empty array.
   Don't return duplicated products.
   Don't return the product provided in the final result.
-  Return an array of products containing these keys: name, description, slug, price, currency, image.
+  Return an array of ids of the products.
   Don't return an object.
 
   {context}
