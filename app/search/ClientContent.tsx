@@ -37,8 +37,9 @@ export default function ClientContent({ products }) {
       const response = await axios.post("/api/search", {
         search_term: data.search_term,
       });
-      setSearchedProducts(response.data);
-      console.log(response.data);
+      setSearchedProducts(
+        products.filter((product) => response.data.includes(product.id))
+      );
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

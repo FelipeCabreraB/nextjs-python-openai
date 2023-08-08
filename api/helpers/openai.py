@@ -110,7 +110,7 @@ def search(search_term):
   You will receive a search term delimited with <>.
   Your task is to use the following pieces of context to find a maximum of three products that match with the search term provided.
   Don't return duplicated products.
-  Return an array of products containing these keys: name, description, slug, price, currency, image.
+  Return an array of ids of the products.
   Don't return an object.
 
   {context}
