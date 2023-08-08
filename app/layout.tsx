@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import HomeLink from "./components/HomeLink";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,13 +11,16 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-slate-400`}>{children}</body>
+      <body className={`${inter.className} bg-secondary`}>
+        <HomeLink />
+        {children}
+      </body>
     </html>
   );
 }

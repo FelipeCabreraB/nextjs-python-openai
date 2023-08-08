@@ -8,6 +8,7 @@ import { Spinner } from "../components/Spinner";
 import Typewriter from "typewriter-effect";
 import Container from "../layout/Container";
 import Link from "next/link";
+import ProductCard from "../components/ProductCard";
 
 type Inputs = {
   question: string;
@@ -88,19 +89,7 @@ export default function ClientContent({ products }) {
               <div>
                 <ul className="grid md:grid-cols-3 gap-5">
                   {searchedProducts?.map((product, i) => (
-                    <Link href={`/product/${product.slug}`} key={i}>
-                      <li className="h-full">
-                        <div className="p-5 border bg-white h-full max-w-4xl mx-auto rounded-md">
-                          <h2 className="text-2xl">
-                            <strong>Name:</strong> {product.name}
-                          </h2>
-                          <p className="text-lg">
-                            <strong>Price:</strong> {product.currency}{" "}
-                            {product.price}
-                          </p>
-                        </div>
-                      </li>
-                    </Link>
+                    <ProductCard key={product.id} product={product} />
                   ))}
                 </ul>
               </div>
@@ -112,21 +101,10 @@ export default function ClientContent({ products }) {
             </div>
           )}
         </div>
-        <h4 className="text-2xl mb-8">Our products:</h4>
+        <h4 className="text-2xl mb-8 text-primary">Our products:</h4>
         <ul className="grid md:grid-cols-3 gap-5">
           {products.map((product, i) => (
-            <Link href={`/product/${product.slug}`} key={i}>
-              <li className="h-full">
-                <div className="p-5 border bg-white h-full max-w-4xl mx-auto rounded-md">
-                  <h2 className="text-2xl">
-                    <strong>Name:</strong> {product.name}
-                  </h2>
-                  <p className="text-lg">
-                    <strong>Price:</strong> {product.currency} {product.price}
-                  </p>
-                </div>
-              </li>
-            </Link>
+            <ProductCard key={product.id} product={product} />
           ))}
         </ul>
       </Container>

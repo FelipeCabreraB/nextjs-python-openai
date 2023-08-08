@@ -12,6 +12,7 @@ async function getData() {
       },
     });
     const products = await res.json();
+    console.log("🚀 ~ file: page.tsx:15 ~ getData ~ products:", products)
     return products;
   } catch (error) {
     return [];

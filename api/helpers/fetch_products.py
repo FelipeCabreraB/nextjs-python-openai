@@ -34,6 +34,7 @@ def fetch_products():
                 "price": item.get("price", None),
                 "currency": item.get("currency", None),
                 "slug": item.get("slug", None),
+                "image": item.get("images", [])[0].get("file", {}).get("url", None)
             }
             extracted_data_list.append(extracted_data)    
         
