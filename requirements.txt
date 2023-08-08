@@ -5,6 +5,5 @@ jq==1.4.1
 tiktoken==0.4.0
 fastapi==0.101.0
 uvicorn==0.23.2
-docarray[hnswlib]>=0.37.0
 redis==4.6.0
 pinecone-client==2.2.2
