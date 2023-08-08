@@ -36,6 +36,7 @@ openai==0.27.8
 openapi-schema-pydantic==1.2.4
 overrides==7.3.1
 packaging==23.1
+pinecone-client==2.2.2
 posthog==3.0.1
 protobuf==4.23.4
 pulsar-client==3.2.0

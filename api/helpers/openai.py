@@ -2,6 +2,7 @@ import os
 import shutil
 import tempfile
 import json
+import pinecone
 from dotenv import load_dotenv
 
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -14,6 +15,8 @@ from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import JSONLoader
 from langchain.prompts import PromptTemplate
 from helpers.fetch_products import fetch_products
+from langchain.chains.question_answering import load_qa_chain
+from langchain.vectorstores import Pinecone
 
 load_dotenv()
 
@@ -27,6 +30,25 @@ def get_chroma_instance():
     embeddings = OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'))
     return  Chroma(embedding_function=embeddings, persist_directory=DATABASE_PATH)
 
+
+
+################################################################################
+# Initialize Pinecone instance
+################################################################################
+pinecone.init(
+    api_key=os.getenv("PINECONE_API_KEY"),
+    environment=os.getenv("PINECONE_ENV"),
+)
+
+################################################################################
+# Generate new Pinecone instance (use one of the all db's)
+################################################################################
+def get_pinecone_instance():
+    embeddings = OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'))
+    print('con pinecone instance')
+    return Pinecone.from_existing_index(index_name='demo-db-august', embedding=embeddings)
+
+
 ################################################################################
 # Read documents from JSON file and add them to Chroma instance
 ################################################################################
@@ -34,9 +56,10 @@ def revalidate():
     if os.path.exists(DATABASE_PATH):
         shutil.rmtree(DATABASE_PATH)
         
-    fetch_products()
+    fetch_products() # this is saving swell data into data.json in a temp folder
   
-    instance = get_chroma_instance()
+    # instance = get_chroma_instance() # open chroma instance
+    instance = get_pinecone_instance() # open pinecone instance
     loader = JSONLoader(
         file_path='./data.json',
         jq_schema='.[]',
@@ -47,16 +70,16 @@ def revalidate():
         documents = loader.load()
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100, separators= ["\n\n", "\n", ".", ";", ",", " ", ""]) # se puede pasar regex a los separators
         texts = text_splitter.split_documents(documents)
-        instance.add_documents(texts)
+        instance.add_documents(texts) # add the splitted documents to the instance db
 
-    instance.persist()
+    # instance.persist() # this is not working with pinecone, needs to be reviewed
 
 ################################################################################
 # Related products
 ################################################################################
 def related(query):
-  instance = get_chroma_instance()
-
+  # instance = get_chroma_instance()
+  instance = get_pinecone_instance() # open pinecone instance
   prompt_template = """You will receive a product object delimited with <>. Your task is to use the following pieces of context to find a maximum of three products that are related to the product delimited with <>.
   If you can not find any related products, just return an empty array.
   Don't return duplicated products.
@@ -87,8 +110,9 @@ def related(query):
 # Search products
 ################################################################################
 def search(search_term):
-  instance = get_chroma_instance()
-
+  # instance = get_chroma_instance()
+  instance = get_pinecone_instance() # open pinecone instance
+  
   prompt_template = """You are an optimized search engine.
   You will receive a search term delimited with <>.
   Your task is to use the following pieces of context to find a maximum of three products that match with the search term provided.
@@ -129,8 +153,8 @@ def clear_memory():
   memory.clear()
 
 def chat_query(question):
-    instance = get_chroma_instance()
-    
+    # instance = get_chroma_instance()
+    instance = get_pinecone_instance() # open pinecone instance
     prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 
         {context}
