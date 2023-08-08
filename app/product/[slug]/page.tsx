@@ -23,9 +23,12 @@ async function getData(slug: string) {
 
 const getRelatedProducts = async (product) => {
   try {
-    const response = await axios.post("http://localhost:8000/api/related", {
-      product,
-    });
+    const response = await axios.post(
+      `${process.env.API_BASE_ROUTE}/api/related`,
+      {
+        product,
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(error.message);
