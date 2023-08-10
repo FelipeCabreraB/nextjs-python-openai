@@ -9,6 +9,7 @@ import Typewriter from "typewriter-effect";
 import Container from "../layout/Container";
 import Link from "next/link";
 import ProductCard from "../components/ProductCard";
+import Cookie from "js-cookie";
 
 type Inputs = {
   question: string;
@@ -22,6 +23,8 @@ type ChatEntry = {
 export default function ClientContent({ products }) {
   const [chatHistory, setChatHistory] = useState<{ content: string }[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [response, setResponse] = useState<string>("");
+  const session_id = Cookie.get("session_id");
 
   const {
     register,
@@ -33,10 +36,13 @@ export default function ClientContent({ products }) {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
     try {
-      const response = await axios.post("/api/chat-query", {
+      const response = await axios.post("/api/chat-test", {
         query: data.question,
+        session_id,
       });
-      setChatHistory(response.data.chat_history);
+      console.log(response.data);
+      // setChatHistory(response.data.chat_history);
+      setResponse(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -96,8 +102,9 @@ export default function ClientContent({ products }) {
             Start a new conversation
           </button>
           <div className="mt-10">
+            <p>{response}</p>
             {chatHistory.map((entry, i) => (
-              <p key={i} className="even:ml-10 even:mb-5 odd:font-bold">
+              <div key={i} className="even:ml-10 even:mb-5 odd:font-bold">
                 {i === chatHistory.length - 1 ? (
                   <Typewriter
                     onInit={(typewriter) => {
@@ -110,7 +117,7 @@ export default function ClientContent({ products }) {
                 ) : (
                   entry.content
                 )}
-              </p>
+              </div>
             ))}
           </div>
           {/* {currentAnswer && (

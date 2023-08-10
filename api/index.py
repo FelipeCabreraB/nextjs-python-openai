@@ -1,7 +1,9 @@
 import json
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Cookie, Response
 from fastapi.middleware.cors import CORSMiddleware
 from api.helpers.openai import revalidate, related, search, chat_query, clear_memory
+from api.helpers.chat_history_test import chat_test
+
 
 app = FastAPI()
 
@@ -52,3 +54,22 @@ async def post_search(search_term: Request):
     data = await search_term.json()
     res = search(json.dumps(data))
     return res
+
+# Chat bot
+@app.post("/api/chat-test")
+async def handle_query(request: Request):
+    data = await request.json()
+    query = data.get('query', None)
+    session_id = data.get('session_id', None)
+    print(query, 'search')
+    result = chat_test(query, session_id)
+    return result
+    
+# Set cookie 
+@app.post("/api/set-cookie") 
+async def set_cookie(request: Request): 
+    response = Response(content="Cookie set!") 
+    data = await request.json()
+    session_id = data.get('session_id', None)
+    response.set_cookie(key="session_id", value=session_id) 
+    return response
