@@ -81,6 +81,3 @@ def chat_test(input, cookie_value):
     result = conversation({"question": input})
 
     return result
-
-def read_cookie(my_cookie: str = Cookie(None)):
-    return {"message": f"Cookie value: {my_cookie}"}

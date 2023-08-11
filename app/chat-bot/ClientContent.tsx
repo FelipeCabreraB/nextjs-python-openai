@@ -5,20 +5,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import { Spinner } from "../components/Spinner";
-import Typewriter from "typewriter-effect";
 import Container from "../_layout/Container";
-import Link from "next/link";
 import ProductCard from "../components/ProductCard";
 import Cookie from "js-cookie";
 import { setCookie } from "../_utils/set-cookie";
+import { v4 as uuidv4 } from "uuid";
 
 type Inputs = {
   question: string;
-};
-
-type ChatEntry = {
-  role: string;
-  content: string;
 };
 
 export default function ClientContent({ products }) {
@@ -55,14 +49,10 @@ export default function ClientContent({ products }) {
   };
 
   const clearMemory = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.post("/api/chat-query", {
-        clear_memory: true,
-      });
-      setChatHistory(response.data);
-    } catch (error) {}
-    setIsLoading(false);
+    Cookie.set("session_id", uuidv4(), { expires: 2 });
+    setChatHistory([]);
+    setAnswer("");
+    setQuestion("");
   };
 
   return (
@@ -111,8 +101,8 @@ export default function ClientContent({ products }) {
                 {entry.content}
               </div>
             ))}
-           <p className="font-bold">{question}</p>
-           <p className="ml-10">{answer}</p>
+            <p className="font-bold">{question}</p>
+            <p className="ml-10">{answer}</p>
           </div>
           {/* {currentAnswer && (
             <div className="ml-10">
