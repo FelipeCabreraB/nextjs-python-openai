@@ -64,17 +64,8 @@ def chat_test(input, cookie_value):
     Chat history: {chat_history}
     Context: {context}
     Human: {question}
-    AI:"""
-
-    TEMPLATE = """
-    The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know.
-
-    {context}
-    Current conversation:
-    {chat_history}
-    Human: {question}
-    AI:
     """
+
     PROMPT = PromptTemplate(
         input_variables=["context", "chat_history", "question"],
         template=_DEFAULT_TEMPLATE,
