@@ -1,12 +1,8 @@
 "use client";
 import Link from "next/link";
-import Container from "./layout/Container";
-import Cookie from "js-cookie";
-import { v4 as uuidv4 } from "uuid";
+import Container from "./_layout/Container";
 
 const Home = () => {
-  Cookie.set("session_id", uuidv4(), { expires: 2 });
-
   return (
     <Container>
       <nav className="py-5 h-screen grid place-content-center">

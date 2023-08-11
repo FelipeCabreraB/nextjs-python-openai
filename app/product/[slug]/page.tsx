@@ -1,7 +1,7 @@
 //@ts-nocheck
 
 import ProductCard from "@/app/components/ProductCard";
-import Container from "@/app/layout/Container";
+import Container from "@/app/_layout/Container";
 import axios from "axios";
 
 async function getData(slug: string) {

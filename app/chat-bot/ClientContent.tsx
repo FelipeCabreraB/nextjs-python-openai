@@ -6,10 +6,11 @@ import axios from "axios";
 import { useState } from "react";
 import { Spinner } from "../components/Spinner";
 import Typewriter from "typewriter-effect";
-import Container from "../layout/Container";
+import Container from "../_layout/Container";
 import Link from "next/link";
 import ProductCard from "../components/ProductCard";
 import Cookie from "js-cookie";
+import { setCookie } from "../_utils/set-cookie";
 
 type Inputs = {
   question: string;
@@ -23,7 +24,8 @@ type ChatEntry = {
 export default function ClientContent({ products }) {
   const [chatHistory, setChatHistory] = useState<{ content: string }[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<string>("");
+  const [answer, setAnswer] = useState<string>("");
+  setCookie();
   const session_id = Cookie.get("session_id");
 
   const {
@@ -41,8 +43,8 @@ export default function ClientContent({ products }) {
         session_id,
       });
       console.log(response.data);
-      // setChatHistory(response.data.chat_history);
-      setResponse(response.data);
+      setChatHistory(response.data?.chat_history);
+      setAnswer(response.data?.answer);
     } catch (error) {
       console.log(error);
     }
@@ -96,29 +98,18 @@ export default function ClientContent({ products }) {
             </button>
           </form>
           <button
-            className="ml-2 text-primary inline-block text-xl px-5 py-3 rounded-lg bg-secondary hover:bg-opacity-80 transition shadow-md mt-5"
+            className="text-primary inline-block text-xl px-5 py-3 rounded-lg bg-secondary hover:bg-opacity-80 transition shadow-md mt-5"
             onClick={clearMemory}
           >
             Start a new conversation
           </button>
           <div className="mt-10">
-            <p>{response}</p>
             {chatHistory.map((entry, i) => (
               <div key={i} className="even:ml-10 even:mb-5 odd:font-bold">
-                {i === chatHistory.length - 1 ? (
-                  <Typewriter
-                    onInit={(typewriter) => {
-                      typewriter.typeString(entry.content).start();
-                    }}
-                    options={{
-                      delay: 5,
-                    }}
-                  />
-                ) : (
-                  entry.content
-                )}
+                {entry.content}
               </div>
             ))}
+            {answer}
           </div>
           {/* {currentAnswer && (
             <div className="ml-10">

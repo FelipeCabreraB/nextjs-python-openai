@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Spinner } from "../components/Spinner";
 import Typewriter from "typewriter-effect";
-import Container from "../layout/Container";
+import Container from "../_layout/Container";
 import Link from "next/link";
 import ProductCard from "../components/ProductCard";
 
