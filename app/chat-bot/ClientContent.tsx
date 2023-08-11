@@ -23,6 +23,7 @@ type ChatEntry = {
 
 export default function ClientContent({ products }) {
   const [chatHistory, setChatHistory] = useState<{ content: string }[]>([]);
+  const [question, setQuestion] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [answer, setAnswer] = useState<string>("");
   setCookie();
@@ -45,6 +46,7 @@ export default function ClientContent({ products }) {
       console.log(response.data);
       setChatHistory(response.data?.chat_history);
       setAnswer(response.data?.answer);
+      setQuestion(response.data?.question);
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +111,8 @@ export default function ClientContent({ products }) {
                 {entry.content}
               </div>
             ))}
-            {answer}
+           <p className="font-bold">{question}</p>
+           <p className="ml-10">{answer}</p>
           </div>
           {/* {currentAnswer && (
             <div className="ml-10">
