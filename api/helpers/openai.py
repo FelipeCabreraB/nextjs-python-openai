@@ -146,8 +146,6 @@ def search(search_term):
 def chat_query(input, cookie_value):
     instance = get_pinecone_instance()
     
-    print(cookie_value)
-    
     history = RedisChatMessageHistory(url=REDIS_URL, session_id=cookie_value, key_prefix='SUMMARY_BUFFER_TEST')
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True, llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')), chat_memory=history)
     
