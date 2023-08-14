@@ -1,9 +1,12 @@
-'use client'
+"use client";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Loading = () => {
-  const [index, setIndex] = useState<number>(Math.floor(Math.random() * (10 - 1 + 1)) + 1)
+  const [index, setIndex] = useState<number>(
+    Math.floor(Math.random() * (10 - 1 + 1)) + 1
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -14,8 +17,8 @@ const Loading = () => {
       setIndex(Math.floor(Math.random() * (10 - 1 + 1)) + 1);
     }, 3000);
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="h-screen flex justify-center items-center">

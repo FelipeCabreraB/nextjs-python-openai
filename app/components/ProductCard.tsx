@@ -3,22 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-interface Props {
-  product: {
-    name: string;
-    images: {
-      file: {
-        url: string;
-      };
-    }[];
-    slug: string;
-    price: number;
-    currency?: string;
-    image?: string;
-  };
-}
-
-const ProductCard = ({ product }: Props) => {
+const ProductCard = ({ product }: ProductCard) => {
   return (
     <div
       data-cy="product-card"
@@ -29,9 +14,8 @@ const ProductCard = ({ product }: Props) => {
           <Link href={`/product/${product.slug}`} data-cy="product-link">
             <Image
               src={
-                (product.images
-                  ? product.images[0].file.url
-                  : product.image) || '/img/not-found.png' as string
+                (product.images ? product.images[0].file.url : product.image) ||
+                ("/img/not-found.png" as string)
               }
               alt={product.name}
               fill

@@ -1,4 +1,3 @@
-//@ts-nocheck
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -10,16 +9,19 @@ import ProductCard from "../components/ProductCard";
 import Cookie from "js-cookie";
 import { setCookie } from "../_utils/set-cookie";
 import { v4 as uuidv4 } from "uuid";
+import Typewriter from "typewriter-effect";
 
 type Inputs = {
   question: string;
 };
 
-export default function ClientContent({ products }) {
+export default function ClientContent({ products }: Products) {
   const [chatHistory, setChatHistory] = useState<{ content: string }[]>([]);
   const [question, setQuestion] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [answer, setAnswer] = useState<string>("");
+  const [currentAnswer, setCurrentAnswer] = useState<string>("");
+
   setCookie();
   const session_id = Cookie.get("session_id");
 
@@ -37,9 +39,9 @@ export default function ClientContent({ products }) {
         query: data.question,
         session_id,
       });
-      console.log(response.data);
       setChatHistory(response.data?.chat_history);
       setAnswer(response.data?.answer);
+      setCurrentAnswer(response.data?.answer);
       setQuestion(response.data?.question);
     } catch (error) {
       console.log(error);
@@ -104,20 +106,17 @@ export default function ClientContent({ products }) {
             <p className="font-bold">{question}</p>
             <p className="ml-10">{answer}</p>
           </div>
-          {/* {currentAnswer && (
-            <div className="ml-10">
-              {
-                <Typewriter
-                  onInit={(typewriter) => {
-                    typewriter.typeString(currentAnswer).start();
-                  }}
-                  options={{
-                    delay: 5,
-                  }}
-                />
-              }
-            </div>
-          )} */}
+          {/* <div className="ml-10">
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter.typeString(answer).start();
+              }}
+              options={{
+                delay: 5,
+              }}
+            />
+          </div> */}
+
           {isLoading && (
             <div className="mt-8 flex justify-center">
               <Spinner />
