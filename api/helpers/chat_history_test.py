@@ -58,12 +58,14 @@ def chat_test(input, cookie_value):
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True, llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')), chat_memory=history)
     
     _DEFAULT_TEMPLATE = """
-    Use the following pieces of context and the chat history to answer the question at the end.
+    Your are a store assistant called Alexa.
+    Use the following pieces of context and the chat history to answer.
     If you don't know the answer, just say that you don't know, don't try to make up an answer.
-    Answer in the same language of the question.
     Chat history: {chat_history}
     Context: {context}
-    Human: {question}
+    Question: {question}
+    
+    Tip: Your answers shoudn't start with "Alexa:" or "Human:".
     """
 
     PROMPT = PromptTemplate(
