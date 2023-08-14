@@ -5,10 +5,9 @@ import json
 from dotenv import load_dotenv
 
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import RetrievalQA
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory, RedisChatMessageHistory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import JSONLoader
@@ -22,11 +21,6 @@ from langchain.vectorstores import Pinecone
 load_dotenv()
 
 ################################################################################
-# CONFIG
-################################################################################
-INDEX_NAME = "test-vector-db"
-
-################################################################################
 # Initialize Pinecone instance
 ################################################################################
 pinecone.init(
@@ -35,38 +29,51 @@ pinecone.init(
 )
 
 ################################################################################
+# CONFIG
+################################################################################
+INDEX_NAME = "test-vector-db"
+
+################################################################################
 # Get pinecone instance
 ################################################################################
 def get_pinecone_instance():
     embeddings = OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'))
     return Pinecone.from_existing_index(INDEX_NAME, embeddings)
 
+################################################################################
+# Get Redis url
+################################################################################
+REDIS_USERNAME = os.getenv("REDIS_USERNAME")
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = os.getenv("REDIS_PORT")
+REDIS_DB = os.getenv("REDIS_DB")
+REDIS_URL = f"redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+
+################################################################################
+# Read documents from JSON file and add them to Pinecone index
+################################################################################
 tmp_dir = tempfile.gettempdir() # -> /var/folders/gw/zwbjcgkj64b1srstp08g4yqh0000gn/T
 DATABASE_PATH = tmp_dir + '/db/'
 
-################################################################################
-# Read documents from JSON file and add them to Chroma instance
-################################################################################
 def revalidate():
     if os.path.exists(DATABASE_PATH):
         shutil.rmtree(DATABASE_PATH)
         
     fetch_products()
-  
     instance = get_pinecone_instance()
+    data_file_path = os.path.join(DATABASE_PATH, 'data.json')
+
     loader = JSONLoader(
-        file_path='./data.json',
+        file_path=data_file_path,
         jq_schema='.[]',
         text_content=False
     )
-
     if loader:
         documents = loader.load()
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100, separators= ["\n\n", "\n", ".", ";", ",", " ", ""]) # se puede pasar regex a los separators
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100, separators= ["\n\n", "\n", ".", ";", ",", " ", ""])
         texts = text_splitter.split_documents(documents)
         instance.add_documents(texts)
-
-    # instance.persist()
 
 ################################################################################
 # Related products
@@ -136,35 +143,37 @@ def search(search_term):
 ################################################################################
 # Chat with OpenAI
 ################################################################################
-# we defined memory outside of function so it does not reset on every request
-memory = ConversationBufferMemory(
-  memory_key="chat_history",
-  return_messages=True
-)
-
-def clear_memory():
-  memory.clear()
-
-def chat_query(question):
+def chat_query(input, cookie_value):
     instance = get_pinecone_instance()
     
-    prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+    print(cookie_value)
     
-    Don't mention the given context in your answer.
+    history = RedisChatMessageHistory(url=REDIS_URL, session_id=cookie_value, key_prefix='SUMMARY_BUFFER_TEST')
+    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True, llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')), chat_memory=history)
+    
+    _DEFAULT_TEMPLATE = """
+    Your are a store assistant called Alexa.
+    Use the following pieces of context and the chat history to answer.
+    If you don't know the answer, just say that you don't know, don't try to make up an answer.
+    Chat history: {chat_history}
+    Context: {context}
+    Question: {question}
+    
+    Tip: Your answers shoudn't start with "Alexa:" or "Human:".
+    """
 
-        {context}
-
-        Question: {question}"""
-    
-    PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-    
-    qa = ConversationalRetrievalChain.from_llm(
-        llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')),
-        retriever=instance.as_retriever(),
-        combine_docs_chain_kwargs={"prompt": PROMPT},
-        memory=memory,
-        verbose=True
+    PROMPT = PromptTemplate(
+        input_variables=["context", "chat_history", "question"],
+        template=_DEFAULT_TEMPLATE,
     )
+    
+    conversation = ConversationalRetrievalChain.from_llm(
+        llm=ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0,openai_api_key=os.getenv('OPENAI_API_KEY')),
+        verbose=True,
+        memory=memory,
+        combine_docs_chain_kwargs={"prompt": PROMPT},
+        retriever=instance.as_retriever()
+    )
+    result = conversation({"question": input})
 
-    result = qa({"question": question})
     return result
