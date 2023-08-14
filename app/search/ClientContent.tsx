@@ -1,27 +1,22 @@
-//@ts-nocheck
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "../components/Spinner";
-import Typewriter from "typewriter-effect";
 import Container from "../_layout/Container";
-import Link from "next/link";
 import ProductCard from "../components/ProductCard";
 
 type Inputs = {
   question: string;
+  search_term: string;
 };
 
-type ChatEntry = {
-  role: string;
-  content: string;
-};
-
-export default function ClientContent({ products }) {
-  const [searchedProducts, setSearchedProducts] = useState<string>("");
+export default function ClientContent({ products }: Products) {
+  const [searchedProducts, setSearchedProducts] = useState<Product[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [noResult, setNoResult] = useState<boolean>(false);
 
   const {
     register,
@@ -32,7 +27,10 @@ export default function ClientContent({ products }) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
-    setSearchedProducts("");
+    setSearchedProducts(undefined);
+    setSearchInput("");
+    setNoResult(false);
+
     try {
       const response = await axios.post("/api/search", {
         search_term: data.search_term,
@@ -41,12 +39,19 @@ export default function ClientContent({ products }) {
         products.filter((product) => response.data.includes(product.id))
       );
       setIsLoading(false);
+      setSearchInput(data.search_term);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
+    } finally {
+      setValue("search_term", "");
     }
-    setValue("search_term", "");
   };
+
+  useEffect(() => {
+    searchedProducts?.length === 0 && setNoResult(true);
+  }),
+    [searchedProducts, noResult];
 
   return (
     <main className="my-20">
@@ -84,13 +89,22 @@ export default function ClientContent({ products }) {
           </form>
           {searchedProducts && (
             <div>
-              <p className="mt-8 mb-2">
-                <strong>Response:</strong>
-              </p>
+              {noResult ? (
+                <p className="mt-8 mb-2">
+                  Sorry, we can`t find any product. Please try again with other.
+                </p>
+              ) : (
+                <p className="mt-8 mb-2">
+                  <strong>
+                    Response for{" "}
+                    <span className="uppercase">{searchInput}</span>
+                  </strong>
+                </p>
+              )}
               <div>
                 <ul className="grid md:grid-cols-3 gap-5">
                   {searchedProducts?.map((product, i) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard key={i} product={product} />
                   ))}
                 </ul>
               </div>
