@@ -1,9 +1,13 @@
 import requests
+import tempfile
 import json
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+tmp_dir = tempfile.gettempdir()
+DATABASE_PATH = os.path.join(tmp_dir, 'db')
 
 def fetch_products():
     url = os.getenv('SWELL_API_URL')
@@ -38,7 +42,10 @@ def fetch_products():
             }
             extracted_data_list.append(extracted_data)    
         
-        open('data.json', 'w').write(json.dumps( extracted_data_list, indent=4))
+        # Writing the extracted data into the data.json file in DATABASE_PATH
+        data_file_path = os.path.join(DATABASE_PATH, 'data.json')
+        with open(data_file_path, 'w') as data_file:
+            json.dump(extracted_data_list, data_file, indent=4)
        
     else:
         print(f"Request failed with status code: {response.status_code}")

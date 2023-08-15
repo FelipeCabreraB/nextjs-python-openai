@@ -33,7 +33,7 @@ export default function ClientContent({ products }) {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
     try {
-      const response = await axios.post("/api/chat-test", {
+      const response = await axios.post("/api/chat-query", {
         query: data.question,
         session_id,
       });
