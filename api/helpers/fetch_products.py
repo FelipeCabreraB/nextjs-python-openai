@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 tmp_dir = tempfile.gettempdir()
-DATABASE_PATH = tmp_dir
+DATABASE_PATH = "/tmp"
 
 def fetch_products():
     url = os.getenv('SWELL_API_URL')
