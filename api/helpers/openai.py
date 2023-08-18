@@ -54,7 +54,7 @@ REDIS_URL = f"redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT
 # Read documents from JSON file and add them to Pinecone index
 ################################################################################
 tmp_dir = tempfile.gettempdir() # -> /var/folders/gw/zwbjcgkj64b1srstp08g4yqh0000gn/T
-DATABASE_PATH = tmp_dir + '/db/'
+DATABASE_PATH = tmp_dir
 
 def revalidate():
     if os.path.exists(DATABASE_PATH):
@@ -157,7 +157,7 @@ def chat_query(input, cookie_value):
     Context: {context}
     Question: {question}
     
-    Tip: Your answers shoudn't start with "Alexa:" or "Human:".
+    Tip: Your answers shouldn't start with "Alexa:" or "Human:".
     """
 
     PROMPT = PromptTemplate(
